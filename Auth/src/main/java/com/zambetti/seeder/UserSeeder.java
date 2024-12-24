@@ -18,24 +18,19 @@ public class UserSeeder {
 
     @Bean
     public CommandLineRunner seedDatabase() {
-        return args -> {
-            // Check if an admin user already exists
-            if (userRepository.findByUsername("admin").isEmpty()) {
-                // Create a new admin user
-                User adminUser = new User();
-                adminUser.setUsername("admin");
-                adminUser.setPassword(passwordEncoder.encode("adminPassword"));  // Password should be hashed
-                //adminUser.setRole("ROLE_ADMIN");
-                //adminUser.setActive(true);
-                //adminUser.setCreatedAt(LocalDateTime.now());
+        return args -> addAdminIfNotExists();
+    }
 
-                // Save the admin user
-                userRepository.save(adminUser);
-                System.out.println("Admin user created.");
-            } else {
-                System.out.println("Admin user already exists.");
-            }
-        };
+    private void addAdminIfNotExists() {
+        if (userRepository.findByUsername("admin").isPresent())
+            return;
+
+        User adminUser = new User();
+        adminUser.setUsername("admin");
+        adminUser.setPassword(passwordEncoder.encode("adminPassword"));  // Password should be hashed
+        adminUser.setRole(User.Role.ADMIN);
+
+        userRepository.save(adminUser);
     }
 
 }

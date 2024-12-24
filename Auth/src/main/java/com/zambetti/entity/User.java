@@ -1,6 +1,7 @@
 package com.zambetti.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +22,20 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
+    @JsonIgnore
     @Column(nullable = true)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public boolean isAccountActive(){
         return password != null;
+    }
+
+    public enum Role {
+        ADMIN,
+        MANAGER,
+        WORKER;
     }
 }

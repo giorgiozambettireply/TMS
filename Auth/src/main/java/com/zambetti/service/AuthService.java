@@ -3,7 +3,6 @@ import com.zambetti.Util.JwtUtil;
 import com.zambetti.entity.User;
 import com.zambetti.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
@@ -41,28 +40,5 @@ public class UserService {
             throw new RuntimeException("Invalid username or password");
 
         return jwtUtil.generateToken(username);
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    public User updateUser(Long id, User userDetails) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        user.setUsername(userDetails.getUsername());
-        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
-        return userRepository.save(user);
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
     }
 }
