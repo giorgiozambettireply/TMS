@@ -18,7 +18,8 @@
 	<modules>
 		<module>ApiGateway</module>
 		<module>Auth</module>
-	</modules>
+        <module>ManagerService</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
