@@ -20,7 +20,8 @@
 		<module>Auth</module>
         <module>ManagerService</module>
         <module>TaskService</module>
-    </modules>
+		<module>FormService</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -43,11 +44,6 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 			<version>3.4.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>3.4.1</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
@@ -76,6 +72,8 @@
 			<version>3.4.1</version>
 			<scope>test</scope>
 		</dependency>
+
+
 	</dependencies>
 
 	<build>

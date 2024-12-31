@@ -63,6 +63,17 @@ public class TaskController {
         return new ResponseEntity<>(createdWorkerTask, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{taskId}/assignedWorkers")
+    public ResponseEntity<List<Long>> getAssignedWorkers(@PathVariable(name = "taskId") Long taskId) {
+        Optional<Task> task = taskService.findById(taskId);
+
+        if (task.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        List<Long> createdWorkerTask = workerTaskService.getAssignedWorkers(task.get());
+        return new ResponseEntity<>(createdWorkerTask, HttpStatus.FOUND);
+    }
+
     @DeleteMapping("/{taskId}/deassignWorker/{workerId}")
     public ResponseEntity<Void> deassignWorker(@PathVariable(name = "taskId") Long taskId, @PathVariable(name = "workerId") Long workerId) {
         Optional<Task> task = taskService.findById(taskId);

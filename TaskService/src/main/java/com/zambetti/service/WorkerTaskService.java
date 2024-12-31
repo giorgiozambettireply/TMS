@@ -6,11 +6,19 @@ import com.zambetti.repository.WorkerTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class WorkerTaskService {
 
     @Autowired
     private WorkerTaskRepository workerTaskRepository;
+
+    public List<Long> getAssignedWorkers(Task task) {
+        List<WorkerTask> workerTasks = workerTaskRepository.findAllByTaskId(task.getId());
+        return workerTasks.stream().map(WorkerTask::getWorkerId).collect(Collectors.toList());
+    }
 
     public WorkerTask assignWorker(Task task, Long workerId) {
         WorkerTask workerTask = new WorkerTask();

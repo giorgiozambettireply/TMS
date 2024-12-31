@@ -1,4 +1,5 @@
 package com.zambetti.service;
+
 import com.zambetti.Util.JwtUtil;
 import com.zambetti.entity.User;
 import com.zambetti.repository.UserRepository;
@@ -6,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +39,6 @@ public class AuthService {
                 !passwordEncoder.matches(password, userOpt.get().getPassword()))
             throw new RuntimeException("Invalid username or password");
 
-        return jwtUtil.generateToken(username);
+        return jwtUtil.generateToken(username, userOpt.get().getRole().toString(), userOpt.get().getId());
     }
 }

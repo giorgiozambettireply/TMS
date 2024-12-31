@@ -1,9 +1,8 @@
 package com.zambetti.Util;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -21,10 +20,12 @@ public class JwtUtil {
         return new SecretKeySpec(bytes, "HmacSHA256");
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, String role, Long userId) {
         int expirationInMilli = 1000 * 60 * 60 * 24;
         return Jwts.builder()
                 .subject(username)
+                .claim("role", role)   // Add role as a custom claim
+                .claim("id", userId)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationInMilli))
                 .signWith(getSigningKey())  // Use the new signing method with the Key object
@@ -34,6 +35,15 @@ public class JwtUtil {
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
+    }
+
+    public String extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("id", String.class));
+    }
+
 
     public <T> T extractClaim(String token, java.util.function.Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
