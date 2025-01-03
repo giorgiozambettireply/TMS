@@ -1,14 +1,6 @@
-package com.zambetti.controller;
 
+/*package com.zambetti.controller;
 
-import com.zambetti.entity.User;
-import com.zambetti.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 
@@ -35,3 +27,5 @@ public class UserController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
+*/
+ */

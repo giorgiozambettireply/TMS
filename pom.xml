@@ -18,7 +18,7 @@
 	<modules>
 		<module>ApiGateway</module>
 		<module>Auth</module>
-        <module>ManagerService</module>
+        <module>UserService</module>
         <module>TaskService</module>
 		<module>FormService</module>
 	</modules>

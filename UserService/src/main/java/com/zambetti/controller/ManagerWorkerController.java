@@ -14,23 +14,23 @@ public class ManagerWorkerController {
     private ManagerWorkerService managerWorkerService;
 
     @GetMapping("/{workerId}/managers")
-    public List<Long> getManagersIds(@PathVariable(name = "workerId") Long workerId) {
+    public List<Long> getManagersIdsOf(@PathVariable(name = "workerId") Long workerId) {
          return managerWorkerService.getManagerIdsForWorker(workerId);
     }
 
     @GetMapping("/{managerId}/workers")
-    public List<Long> getWorkersIds(@PathVariable(name = "managerId") Long managerId) {
+    public List<Long> getWorkersIdsOf(@PathVariable(name = "managerId") Long managerId) {
         return managerWorkerService.getWorkerIdsForManager(managerId);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addRelationship(@RequestParam(name = "workerId") Long workerId, @RequestParam(name = "managerId") Long managerId) {
+    @PostMapping("/team/add")
+    public ResponseEntity<String> addToTeam(@RequestParam(name = "workerId") Long workerId, @RequestParam(name = "managerId") Long managerId) {
         managerWorkerService.addManagerWorker(workerId, managerId);
         return ResponseEntity.ok("Relationship added successfully");
     }
 
-    @DeleteMapping("/remove")
-    public ResponseEntity<String> removeRelationship(@RequestParam(name = "workerId") Long workerId, @RequestParam(name = "managerId") Long managerId) {
+    @DeleteMapping("/team/remove")
+    public ResponseEntity<String> removeFromTeam(@RequestParam(name = "workerId") Long workerId, @RequestParam(name = "managerId") Long managerId) {
         managerWorkerService.removeManagerWorker(workerId, managerId);
         return ResponseEntity.ok("Relationship removed successfully if present");
     }

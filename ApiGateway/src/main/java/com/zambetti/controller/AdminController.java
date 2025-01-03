@@ -1,5 +1,5 @@
 package com.zambetti.controller;
-
+/*
 
 import com.zambetti.entity.User;
 import com.zambetti.service.UserService;
@@ -46,4 +46,6 @@ public class AdminController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-}
+
+
+} */

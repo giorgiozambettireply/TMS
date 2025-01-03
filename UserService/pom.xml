@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ManagerService</artifactId>
+    <artifactId>UserService</artifactId>
     <dependencies>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
