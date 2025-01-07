@@ -16,6 +16,7 @@ public class WorkerTask {
     private Long id;
 
     private Long workerId;
+    private String workerName;
 
     private Long taskId;
 

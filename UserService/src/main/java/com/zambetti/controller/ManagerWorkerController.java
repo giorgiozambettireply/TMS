@@ -23,14 +23,14 @@ public class ManagerWorkerController {
         return managerWorkerService.getWorkerIdsForManager(managerId);
     }
 
-    @PostMapping("/team/add")
-    public ResponseEntity<String> addToTeam(@RequestParam(name = "workerId") Long workerId, @RequestParam(name = "managerId") Long managerId) {
+    @PostMapping("/team/{managerId}/add/{workerId}")
+    public ResponseEntity<String> addToTeam(@PathVariable(name = "workerId") Long workerId, @PathVariable(name = "managerId") Long managerId) {
         managerWorkerService.addManagerWorker(workerId, managerId);
         return ResponseEntity.ok("Relationship added successfully");
     }
 
-    @DeleteMapping("/team/remove")
-    public ResponseEntity<String> removeFromTeam(@RequestParam(name = "workerId") Long workerId, @RequestParam(name = "managerId") Long managerId) {
+    @DeleteMapping("/team/{managerId}/remove/{workerId}")
+    public ResponseEntity<String> removeFromTeam(@PathVariable(name = "workerId") Long workerId, @PathVariable(name = "managerId") Long managerId) {
         managerWorkerService.removeManagerWorker(workerId, managerId);
         return ResponseEntity.ok("Relationship removed successfully if present");
     }

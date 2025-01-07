@@ -11,7 +11,11 @@ public class FormSubmission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long formTaskId;
+
+    @ManyToOne
+    @JoinColumn(name = "form_task_id")
+    private FormTask formTask;
+
     private Long workerId;
 
     @OneToMany(mappedBy = "formSubmission", cascade = CascadeType.ALL)

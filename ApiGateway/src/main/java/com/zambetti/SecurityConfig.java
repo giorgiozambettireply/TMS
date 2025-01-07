@@ -16,6 +16,9 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -29,10 +32,25 @@ public class SecurityConfig {
     private CustomUserDetailsService userDetailsService;
 
     @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("*");  // TODO: only allow frontend
+        corsConfig.addAllowedMethod("*");
+        corsConfig.addAllowedHeader("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);  // Applica la configurazione a tutte le rotte
+        return source;
+    }
+
+
+    @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http, CustomUserDetailsService customUserDetailsService) throws Exception {
-        http.csrf()
-                .disable().authorizeExchange()
+        http.csrf().disable()
+                .cors().and()
+                .authorizeExchange()
                 .pathMatchers("/api/auth/**").permitAll()  // Permetti l'accesso senza autenticazione a login
+                .pathMatchers("/api/users/**").authenticated()  // Permetti l'accesso senza autenticazione a login
                 .anyExchange().authenticated();
                 /*.and()
                 .sessionManagement()

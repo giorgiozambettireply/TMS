@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
 import java.time.LocalDateTime;
 
@@ -25,4 +26,6 @@ public class Task {
     private LocalDateTime deadline;
 
     private String description;
+
+    private String managerName;
 }

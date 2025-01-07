@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +28,17 @@ public class TaskController {
     public List<Task> getAllTasks() {
         return taskService.findAll();
     }
+
+    @GetMapping("/employee/{employeeId}") //TODO: get employeeId from token
+    public List<Task> getAllTasksByEmployeeId(@PathVariable(name = "employeeId") Long employeeId) {
+        return taskService.findAllByEmployeeId(employeeId);
+    }
+
+    @GetMapping("/manager/{managerId}") //TODO: get managerId from token
+    public List<Task> getAllTasksByManagerId(@PathVariable(name = "managerId") Long managerId) {
+        return taskService.findAllByManagerId(managerId);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable(name = "id") Long id) {
@@ -53,25 +66,25 @@ public class TaskController {
     }
 
     @PostMapping("/{taskId}/assignWorker/{workerId}")
-    public ResponseEntity<WorkerTask> assignWorker(@PathVariable(name = "taskId") Long taskId, @PathVariable(name = "workerId") Long workerId) {
+    public ResponseEntity<WorkerTask> assignWorker(@PathVariable(name = "taskId") Long taskId, @PathVariable(name = "workerId") Long workerId, @RequestBody String workerName) {
         Optional<Task> task = taskService.findById(taskId);
 
         if (task.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        WorkerTask createdWorkerTask = workerTaskService.assignWorker(task.get(), workerId);
+        WorkerTask createdWorkerTask = workerTaskService.assignWorker(task.get(), workerId, workerName);
         return new ResponseEntity<>(createdWorkerTask, HttpStatus.CREATED);
     }
 
     @GetMapping("/{taskId}/assignedWorkers")
-    public ResponseEntity<List<Long>> getAssignedWorkers(@PathVariable(name = "taskId") Long taskId) {
+    public ResponseEntity<List<WorkerTask>> getAssignedWorkers(@PathVariable(name = "taskId") Long taskId) {
         Optional<Task> task = taskService.findById(taskId);
 
         if (task.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        List<Long> createdWorkerTask = workerTaskService.getAssignedWorkers(task.get());
-        return new ResponseEntity<>(createdWorkerTask, HttpStatus.FOUND);
+        List<WorkerTask> assignedWorkers = workerTaskService.getAssignedWorkers(task.get());
+        return new ResponseEntity<>(assignedWorkers, HttpStatus.OK);
     }
 
     @DeleteMapping("/{taskId}/deassignWorker/{workerId}")

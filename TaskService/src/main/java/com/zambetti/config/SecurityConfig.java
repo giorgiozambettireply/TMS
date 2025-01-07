@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @EnableWebFluxSecurity
 @Configuration
@@ -18,7 +19,6 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeExchange()
                 .anyExchange().permitAll();
-        //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //.httpBasic(Customizer.withDefaults());
         return http.build();
     }
 

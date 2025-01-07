@@ -11,5 +11,7 @@ import java.util.Optional;
 public interface WorkerTaskRepository extends JpaRepository<WorkerTask, Long> {
     Optional<WorkerTask> findByWorkerIdAndTaskId(Long workerId, Long taskId);
 
+    List<WorkerTask> findAllByWorkerId(Long workerId);
+
     List<WorkerTask> findAllByTaskId(Long taskId);
 }

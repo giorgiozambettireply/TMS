@@ -18,19 +18,38 @@ public class UserSeeder {
 
     @Bean
     public CommandLineRunner seedDatabase() {
-        return args -> addAdminIfNotExists();
+        return args -> {
+            addAdminIfNotExists();
+            addManagerIfNotExists("manager1");
+            addManagerIfNotExists("manager2");
+            addEmployeeIfNotExists("employee1");
+            addEmployeeIfNotExists("employee2");
+            addEmployeeIfNotExists("employee3");
+        };
     }
 
     private void addAdminIfNotExists() {
-        if (userRepository.findByUsername("admin").isPresent())
+        addUserIfNotExists("admin","admin",User.Role.ADMIN);
+    }
+
+    private void addManagerIfNotExists(String name) {
+        addUserIfNotExists(name,name,User.Role.MANAGER);
+    }
+
+    private void addEmployeeIfNotExists(String name) {
+        addUserIfNotExists(name,name,User.Role.EMPLOYEE);
+    }
+
+    private void addUserIfNotExists(String name, String password, User.Role role) {
+        if (userRepository.findByUsername(name).isPresent())
             return;
 
-        User adminUser = new User();
-        adminUser.setUsername("admin");
-        adminUser.setPassword(passwordEncoder.encode("adminPassword"));  // Password should be hashed
-        adminUser.setRole(User.Role.ADMIN);
+        User user = new User();
+        user.setUsername(name);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRole(role);
 
-        userRepository.save(adminUser);
+        userRepository.save(user);
     }
 
 }

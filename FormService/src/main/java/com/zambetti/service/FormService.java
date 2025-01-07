@@ -2,6 +2,7 @@ package com.zambetti.service;
 
 import com.zambetti.entity.Form;
 import com.zambetti.entity.FormSubmission;
+import com.zambetti.entity.FormTask;
 import com.zambetti.repository.FormRepository;
 import com.zambetti.repository.FormSubmissionRepository;
 import com.zambetti.repository.FormTaskRepository;
@@ -25,6 +26,14 @@ public class FormService {
 
     public Form createForm(Form form) {
         return formRepository.save(form);
+    }
+
+    public FormTask attachForm(Form form, Long taskId) {
+        FormTask formTask = new FormTask();
+        formTask.setFormId(form.getId());
+        formTask.setTaskId(taskId);
+
+        return formTaskRepository.save(formTask);
     }
 
     public Form getFormById(Long id) {
@@ -74,5 +83,10 @@ public class FormService {
     public FormSubmission getFormSubmissionById(Long id) {
         return formSubmissionRepository.findById(id).orElse(null);
     }
+
+    public List<FormSubmission> getTaskFormSubmissions(Long taskId) {
+       return formSubmissionRepository.findAllByFormTaskId(taskId);
+    }
+
 }
 

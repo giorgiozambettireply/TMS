@@ -59,6 +59,9 @@ public class AuthController {
         return Mono.just(userInfo);
     }
 
+
+
+
  /* TODO: remove debug methods
     @GetMapping("/role")
     public ResponseEntity<String> getUserRole(Authentication authentication) {

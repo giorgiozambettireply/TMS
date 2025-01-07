@@ -59,8 +59,14 @@ public class FormController {
     }
 
     @GetMapping("/submissions")
-    public ResponseEntity<List<FormSubmission>> getAllFormSubmissions() {
+    public ResponseEntity<List<FormSubmission>> getAllFormSubmissions(@PathVariable(name = "taskId") Long taskId) {
         List<FormSubmission> submissions = formService.getAllFormSubmissions();
+        return ResponseEntity.ok(submissions);
+    }
+
+    @GetMapping("/submissions/task/{taskId}")
+    public ResponseEntity<List<FormSubmission>> getTaskFormSubmissions(@PathVariable(name = "taskId") Long taskId) {
+        List<FormSubmission> submissions = formService.getTaskFormSubmissions(taskId);
         return ResponseEntity.ok(submissions);
     }
 
