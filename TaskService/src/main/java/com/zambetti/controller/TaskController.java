@@ -72,7 +72,7 @@ public class TaskController {
         if (task.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        WorkerTask createdWorkerTask = workerTaskService.assignWorker(task.get(), workerId, workerName);
+        WorkerTask createdWorkerTask = workerTaskService.assignWorker(task.get(), workerId, workerName.replace("\"", ""));
         return new ResponseEntity<>(createdWorkerTask, HttpStatus.CREATED);
     }
 

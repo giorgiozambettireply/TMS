@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,6 +23,11 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable(name="id") Long id) {
         var user = userService.findById(id);
         return getUserOrNotFound(user);
+    }
+
+    @GetMapping("/employees")
+    public ResponseEntity<List<User>> getEveryEmployee() {
+       return new ResponseEntity<>(userService.findAllEmployees(), HttpStatus.OK);
     }
 /*
     @GetMapping("/username/{username}")

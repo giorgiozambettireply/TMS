@@ -23,7 +23,7 @@ public class ManagerWorkerController {
         return managerWorkerService.getWorkerIdsForManager(managerId);
     }
 
-    @PostMapping("/team/{managerId}/add/{workerId}")
+    @GetMapping("/team/{managerId}/add/{workerId}")
     public ResponseEntity<String> addToTeam(@PathVariable(name = "workerId") Long workerId, @PathVariable(name = "managerId") Long managerId) {
         managerWorkerService.addManagerWorker(workerId, managerId);
         return ResponseEntity.ok("Relationship added successfully");
