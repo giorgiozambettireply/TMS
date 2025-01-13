@@ -18,6 +18,6 @@ public class FormSubmission {
 
     private Long workerId;
 
-    @OneToMany(mappedBy = "formSubmission", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "formSubmission", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FieldSubmission> fieldSubmissions;
 }

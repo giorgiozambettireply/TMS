@@ -2,6 +2,7 @@ package com.zambetti.controller;
 
 import com.zambetti.entity.Form;
 import com.zambetti.entity.FormSubmission;
+import com.zambetti.entity.FormTask;
 import com.zambetti.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,16 @@ public class FormController {
         return ResponseEntity.ok(forms);
     }
 
+    @GetMapping("/formTask/{taskId}")
+    public ResponseEntity<List<FormTask>> getFormTasks(@PathVariable(name = "taskId") Long taskId) {
+        return ResponseEntity.ok(formService.getFormTasks(taskId));
+    }
+
+    @GetMapping("/formTask/formTask/{formTaskId}")
+    public ResponseEntity<FormTask> getFormTask(@PathVariable(name = "formTaskId") Long formTaskId) {
+        return ResponseEntity.ok(formService.getFormTask(formTaskId).get());
+    }
+
     @GetMapping("/manager/{managerId}")
     public ResponseEntity<List<Form>> getManagerForms(@PathVariable(name = "managerId") Long managerId) {
         List<Form> forms = formService.getManagerForms(managerId);
@@ -71,8 +82,14 @@ public class FormController {
     }
 
     @GetMapping("/submissions/{id}")
-    public ResponseEntity<FormSubmission> getFormSubmissionById(@PathVariable Long id) {
+    public ResponseEntity<FormSubmission> getFormSubmissionById(@PathVariable(name = "id") Long id) {
         FormSubmission submission = formService.getFormSubmissionById(id);
         return submission != null ? ResponseEntity.ok(submission) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{formId}/attachToTask/{taskId}")
+    public ResponseEntity<FormTask> attachFormToTask(@PathVariable(name = "formId") Long formId, @PathVariable(name = "taskId") Long taskId) {
+        FormTask formTask = formService.attachForm(formService.getFormById(formId), taskId);
+        return ResponseEntity.ok(formTask);
     }
 }

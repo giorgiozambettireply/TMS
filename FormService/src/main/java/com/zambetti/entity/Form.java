@@ -14,6 +14,6 @@ public class Form {
     private String title;
     private Long managerId;
 
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Field> fields;
 }
